@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>spartanhacks.com | Premium</title>
+    <style>
+        :root {
+            --rojo-oscuro: #5e0000;
+            --rojo-brillante: #ff0000;
+            --negro: #000000;
+        }
+
+        body {
+            background-color: var(--negro);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* Título Eléctrico */
+        header {
+            padding: 80px 20px;
+            background: radial-gradient(circle, #300000 0%, #000 100%);
+            border-bottom: 2px solid var(--rojo-oscuro);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: white;
+            text-transform: lowercase; /* Fuerza minúsculas */
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--rojo-brillante), 0 0 20px var(--rojo-oscuro);
+            animation: rayo 1.5s infinite alternate;
+        }
+
+        @keyframes rayo {
+            from { text-shadow: 0 0 10px var(--rojo-brillante); opacity: 1; }
+            to { text-shadow: 0 0 30px var(--rojo-brillante), 0 0 50px var(--rojo-oscuro); opacity: 0.8; }
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #111;
+            border: 1px solid var(--rojo-oscuro);
+            padding: 25px;
+            border-radius: 10px;
+            width: 280px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--rojo-brillante);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: var(--rojo-oscuro);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            border: 1px solid var(--rojo-brillante);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>spartanhacks.com</h1>
+        <p style="color: var(--rojo-brillante);">LA ÉLITE DEL GAMING</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h3>Símbolos Pro</h3>
+            <p>Nicks exclusivos para tu perfil.</p>
+            <a href="#" class="btn">ENTRAR</a>
+        </div>
+        <div class="card">
+            <h3>Sensibilidad</h3>
+            <p>Configuraciones VIP actualizadas.</p>
+            <a href="#" class="btn">VER MÁS</a>
+        </div>
+    </div>
+
+</body>
+</html>
