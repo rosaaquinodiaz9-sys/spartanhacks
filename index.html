@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>estarlinhacks </title>
+    <title>estarlinhacks | THE ULTIMATE PANEL</title>
     <style>
         :root {
             --color-principal: #660000;
@@ -20,120 +20,113 @@
             overflow-x: hidden;
         }
 
-        /* Barra de estadísticas Real */
+        /* Video de fondo simulado con efecto Matrix Rojo */
+        .video-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZ3bmZ3bmZ3bmZ3bmZ3bmZ3JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxidWExZhm/giphy.gif');
+            background-size: cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
         .stats-bar {
-            background: rgba(0, 0, 0, 0.9);
+            background: #000;
             padding: 10px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             border-bottom: 2px solid var(--color-principal);
-            position: sticky;
-            top: 0;
-            z-index: 1001;
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            justify-content: space-around;
         }
 
-        header {
-            padding: 60px 20px;
-            background: linear-gradient(180deg, #1a0000, #050505);
-            border-bottom: 1px solid var(--color-principal);
+        /* Reloj de Oferta */
+        .oferta-reloj {
+            background: var(--color-principal);
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-radius: 0 0 20px 20px;
+            display: inline-block;
+            box-shadow: 0 0 15px var(--color-brillo);
         }
 
-        h1 { font-size: 2.8rem; text-transform: lowercase; text-shadow: 0 0 10px var(--color-brillo); margin: 0; }
+        header { padding: 40px 20px; }
+        h1 { font-size: 2.5rem; text-shadow: 0 0 15px var(--color-brillo); margin: 0; }
 
         .container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 25px;
-            padding: 40px 10px;
+            gap: 20px;
+            padding: 30px 10px;
         }
 
         .card {
-            background: #111;
+            background: rgba(17, 17, 17, 0.9);
             border: 2px solid var(--color-principal);
-            border-radius: 20px;
-            width: 300px;
+            border-radius: 15px;
+            width: 280px;
             padding: 15px;
-            transition: 0.4s;
-        }
-
-        .card:hover {
-            border-color: var(--color-brillo);
-            transform: scale(1.05);
-            box-shadow: 0 0 30px var(--color-brillo);
-        }
-
-        .img-producto {
-            width: 100%;
-            height: 180px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-            border: 1px solid #333;
-            background-color: #222;
-        }
-
-        .precio {
-            font-size: 1.8rem;
-            color: #00ff00;
-            font-weight: bold;
-            text-shadow: 0 0 10px #00ff00;
-            margin: 15px 0;
-        }
-
-        .btn-comprar {
-            display: inline-block;
-            padding: 12px 0;
-            background: var(--color-principal);
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 10px;
-            border: 1px solid var(--color-brillo);
-            width: 100%;
             transition: 0.3s;
         }
 
-        .rating { margin: 40px 0; }
-        .stars { color: #ffcc00; font-size: 2rem; text-shadow: 0 0 10px #ffcc00; }
+        .card:hover { border-color: var(--color-brillo); transform: translateY(-10px); }
 
-        .top-list {
-            background: #111;
+        .icon-box { font-size: 3.5rem; height: 100px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 10px; margin-bottom: 10px; }
+
+        .precio { color: #00ff00; font-size: 1.6rem; margin: 10px 0; font-weight: bold; }
+
+        .btn-comprar {
+            display: block;
+            padding: 12px;
+            background: var(--color-principal);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 1px solid var(--color-brillo);
+        }
+
+        /* Testimonios */
+        .testimonios {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+
+        .testigo {
+            font-style: italic;
+            color: #ccc;
+            margin: 20px 0;
+            border-left: 4px solid var(--color-principal);
+            padding-left: 15px;
+            text-align: left;
+            max-width: 500px;
             margin: 20px auto;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid var(--color-principal);
         }
 
-        .top-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #222;
-        }
-
+        /* Botones Flotantes */
         .botones-flotantes {
             position: fixed;
             bottom: 20px;
             right: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             z-index: 1000;
         }
 
         .btn-contacto {
-            padding: 14px 22px;
+            padding: 15px 20px;
             border-radius: 30px;
             color: white;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.85rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            font-size: 0.8rem;
             text-align: center;
+            box-shadow: 0 0 10px black;
         }
 
         .dueno { background: #008000; border: 2px solid #00ff00; }
@@ -143,72 +136,67 @@
 </head>
 <body>
 
+    <div class="video-bg"></div>
+
     <div class="stats-bar">
-        <span>Visitas Reales: <b id="visitor-count">1,504</b></span>
-        <span>Online: <b id="online-users" style="color: #00ff00;">108</b></span>
+        <span>Visitas: <b id="visitor-count">1,582</b></span>
+        <span>Online: <b id="online-users" style="color: #00ff00;">124</b></span>
+    </div>
+
+    <div class="oferta-reloj">
+        OFERTA TERMINA EN: <span id="timer">09:54:21</span>
     </div>
 
     <header>
         <h1>estarlinhacks</h1>
-        <p style="color: var(--color-brillo); letter-spacing: 2px;">PREMIUM HACKS & REGEDIT</p>
+        <p style="color: var(--color-brillo);">THE DOMINICAN POWER</p>
     </header>
 
     <div class="container">
-        <!-- HOLOGRAMA -->
+        <!-- PRODUCTOS -->
         <div class="card">
-            <!-- Imagen de Antena/Wallhack -->
-            <div class="img-producto" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf_A5w1-Ff_7t6Yp8mXfW88v6-XWq0YQ9_fQ&s');"></div>
-            <h3>HOLOGRAMA VIP</h3>
-            <p>Mira enemigos tras paredes (Antena/Wallhack).</p>
+            <div class="icon-box">👁️</div>
+            <h3>HOLOGRMA VIP</h3>
             <div class="precio">$5.00 USD</div>
-            <a href="https://wa.me/18493931148?text=Hola,%20vengo%20de%20la%20web%20y%20quiero%20el%20Holograma%20VIP" class="btn-comprar">COMPRAR</a>
+            <a href="https://wa.me/18493931148" class="btn-comprar">COMPRAR</a>
         </div>
 
-        <!-- AIMBOT -->
         <div class="card">
-            <!-- Imagen de Disparo a la cabeza -->
-            <div class="img-producto" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_6u5k-zF8h6z8j-r-mG5A7N8zE7IuYyYyYQ&s');"></div>
-            <h3>AIMBOT CABEZA</h3>
-            <p>Disparo automático al casco (Aimbot 100%).</p>
+            <div class="icon-box">🎯</div>
+            <h3>AIMBOT 100%</h3>
             <div class="precio">$15.00 USD</div>
-            <a href="https://wa.me/18493931148?text=Hola,%20vengo%20de%20la%20web%20y%20quiero%20el%20Aimbot%20Cabeza" class="btn-comprar">COMPRAR</a>
+            <a href="https://wa.me/18493931148" class="btn-comprar">COMPRAR</a>
         </div>
 
-        <!-- REGEDIT -->
         <div class="card">
-            <!-- Imagen de Engranaje/Ajustes -->
-            <div class="img-producto" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7T9k9zE7IuYyYyYQ_6u5k-zF8h6z8j-r-mG5A7N8zE7IuYyYyYQ&s'); background-color: white;"></div>
-            <h3>REGEDIT VIP</h3>
-            <p>Ajustes de sensibilidad interna y optimización.</p>
+            <div class="icon-box">🚗</div>
+            <h3>CARRO VOLADOR</h3>
+            <div class="precio">$10.00 USD</div>
+            <a href="https://wa.me/18493931148" class="btn-comprar">COMPRAR</a>
+        </div>
+
+        <div class="card">
+            <div class="icon-box">📡</div>
+            <h3>ANTENA HEAD</h3>
             <div class="precio">$5.00 USD</div>
-            <a href="https://wa.me/18493931148?text=Hola,%20vengo%20de%20la%20web%20y%20quiero%20el%20Regedit%20VIP" class="btn-comprar">COMPRAR</a>
+            <a href="https://wa.me/18493931148" class="btn-comprar">COMPRAR</a>
         </div>
     </div>
 
-    <div class="top-list">
-        <h4>🏆 TOP COMPRADORES (Real)</h4>
-        <div class="top-item"><span>1. Sniper_RD</span> <span>$210.00</span></div>
-        <div class="top-item"><span>2. King_FF</span> <span>$145.00</span></div>
-        <div class="top-item"><span>3. Spartan_RD</span> <span>$90.00</span></div>
-    </div>
-
-    <div class="rating">
-        <p>VALORACIÓN DE NUESTROS CLIENTES:</p>
-        <div class="stars">★★★★★</div>
+    <div class="testimonios">
+        <h3>💬 TESTIMONIOS REALES</h3>
+        <div class="testigo">"El regedit me cambió la vida, ahora pego todo rojo en clasificatoria." - <b>Sniper_RD</b></div>
+        <div class="testigo">"Soporte rápido y el aimbot no da ban. Recomendado 100%." - <b>ElTigre_FF</b></div>
     </div>
 
     <div class="botones-flotantes">
-        <a href="https://wa.me/18493931148?text=Hola%20Dueño%20de%20Estarlinhacks" class="btn-contacto dueno">👑 DUEÑO</a>
-        <a href="https://wa.me/18094921522?text=Hola%20Soporte%20de%20Estarlinhacks" class="btn-contacto soporte">🛠️ SOPORTE</a>
+        <a href="https://wa.me/18493931148" class="btn-contacto dueno">👑 DUEÑO</a>
+        <a href="https://wa.me/18094921522" class="btn-contacto soporte">🛠️ SOPORTE</a>
     </div>
 
     <script>
-        const colors = [
-            {p: '#660000', b: '#ff0000'}, 
-            {p: '#000066', b: '#00a2ff'}, 
-            {p: '#4b0082', b: '#bc13fe'}, 
-            {p: '#004d00', b: '#00ff00'}
-        ];
+        // Cambio de colores
+        const colors = [{p:'#660000',b:'#ff0000'}, {p:'#000066',b:'#00a2ff'}, {p:'#004d00',b:'#00ff00'}];
         let i = 0;
         setInterval(() => {
             i = (i + 1) % colors.length;
@@ -216,17 +204,24 @@
             document.documentElement.style.setProperty('--color-brillo', colors[i].b);
         }, 5000);
 
-        // Contador de visitas simulado pero persistente por sesión
-        let visits = localStorage.getItem('visitCount') || 1504;
-        visits++;
-        localStorage.setItem('visitCount', visits);
-        document.getElementById('visitor-count').innerText = visits;
+        // Reloj de cuenta regresiva
+        function startTimer(duration, display) {
+            var timer = duration, hours, minutes, seconds;
+            setInterval(function () {
+                hours = parseInt(timer / 3600, 10);
+                minutes = parseInt((timer % 3600) / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                display.textContent = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                if (--timer < 0) timer = duration;
+            }, 1000);
+        }
+        window.onload = function () { startTimer(35661, document.querySelector('#timer')); };
 
-        setInterval(() => {
-            const online = Math.floor(Math.random() * (120 - 90 + 1)) + 90;
-            document.getElementById('online-users').innerText = online;
-        }, 3000);
+        // Visitas
+        let v = localStorage.getItem('vCount') || 1582;
+        v++;
+        localStorage.setItem('vCount', v);
+        document.getElementById('visitor-count').innerText = v;
     </script>
-
 </body>
 </html>
