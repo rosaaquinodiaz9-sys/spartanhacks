@@ -3,175 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FRANCIS HACK | Tienda Oficial</title>
-    <link rel="stylesheet" href="style.css">
+    <title>FRANCIS HACK | V3 ULTRA PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
+
+        :root {
+            --primary: #00f2ff;
+            --accent: #ff0055;
+            --bg-dark: #020205;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(0, 242, 255, 0.2);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #0a0a1a 0%, #020205 100%);
+        }
+
+        /* HEADER ESTILO CUBAN */
+        .header-pro {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.8);
+            border-bottom: 1px solid var(--border-glass);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .logo-text {
+            font-size: 1.5rem; font-weight: 700; text-transform: uppercase;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* SIDEBAR IZQUIERDA (IGUAL A LA IMAGEN) */
+        .sidebar {
+            position: fixed; top: 0; left: -100%;
+            width: 280px; height: 100%;
+            background: rgba(5, 5, 10, 0.95);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--primary);
+            transition: 0.4s ease; z-index: 2000;
+            overflow-y: auto;
+        }
+        .sidebar.active { left: 0; }
+
+        .sidebar-item {
+            padding: 15px 25px;
+            display: flex; align-items: center; gap: 15px;
+            color: #aaa; text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            font-size: 0.9rem; transition: 0.3s;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            color: var(--primary); background: rgba(0, 242, 255, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+        .sidebar-header { padding: 25px; border-bottom: 1px solid var(--border-glass); color: var(--primary); font-weight: bold; }
+
+        /* SALDOS */
+        .user-panel {
+            background: var(--glass); border-radius: 15px; padding: 20px;
+            border: 1px solid var(--border-glass); margin: 20px;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.05);
+        }
+        .balance-container { display: flex; gap: 10px; margin-top: 15px; }
+        .balance-box {
+            flex: 1; background: rgba(0,0,0,0.5); padding: 12px;
+            border-radius: 10px; border-bottom: 2px solid var(--primary);
+        }
+
+        /* PRODUCTOS */
+        .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px; }
+        .card-pro {
+            background: var(--glass); border: 1px solid var(--border-glass);
+            border-radius: 15px; padding: 15px; text-align: center;
+        }
+        .buy-btn {
+            width: 100%; padding: 8px; background: var(--primary); border: none;
+            color: black; border-radius: 8px; font-weight: bold; cursor: pointer;
+        }
+
+        /* MODAL DE PAGOS */
+        .modal {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 3000;
+        }
+        .modal-content {
+            background: #0a0a15; border: 1px solid var(--primary); padding: 25px;
+            border-radius: 20px; width: 85%; text-align: center;
+        }
+        .info-pago { background: #000; padding: 15px; border: 1px dashed var(--primary); color: var(--primary); margin: 15px 0; }
+        
+        /* BOTÓN FLOTANTE */
+        .fab {
+            position: fixed; bottom: 20px; right: 20px;
+            background: #25d366; width: 55px; height: 55px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 25px;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- MENÚ LATERAL -->
+    <div class="header-pro">
+        <div class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+        <div class="logo-text">FRANCIS HACK</div>
+        <div style="color: var(--primary);"><i class="fa-solid fa-bell"></i></div>
+    </div>
+
+    <!-- SIDEBAR IZQUIERDA (OPCIONES DE LA IMAGEN) -->
     <div id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <span class="cyan">FRANCIS</span><span class="pink">HACK</span>
-            <i class="fa-solid fa-xmark" onclick="toggleMenu()"></i>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="javascript:void(0)" onclick="showSection('home')"><i class="fa-solid fa-house"></i> Inicio</a>
-            <a href="javascript:void(0)" onclick="showSection('tienda')"><i class="fa-solid fa-box-open"></i> Productos</a>
-            <a href="javascript:void(0)" onclick="showSection('pagos')"><i class="fa-solid fa-wallet"></i> Recargar Saldo</a>
-            <hr>
-            <a href="#" class="pink"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
-        </nav>
+        <div class="sidebar-header">NAVEGACIÓN <span onclick="toggleMenu()" style="float:right; cursor:pointer;">×</span></div>
+        <a href="#" class="sidebar-item active"><i class="fa-solid fa-house"></i> Inicio</a>
+        <a href="#" class="sidebar-item" onclick="showSection('tienda')"><i class="fa-solid fa-cart-shopping"></i> Productos</a>
+        <a href="#" class="sidebar-item" onclick="showSection('pagos')"><i class="fa-solid fa-wallet"></i> Recargar Saldo</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-users"></i> Afiliación Flourite</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-id-card"></i> Bypass ID</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-cloud"></i> LD Cloud</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-share-nodes"></i> Redes Sociales</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-book"></i> Tutoriales</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-trophy"></i> Rankings</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-user-gear"></i> Mi Cuenta</a>
+        <a href="#" class="sidebar-item"><i class="fa-solid fa-clock-rotate-left"></i> Historial</a>
+        <a href="#" class="sidebar-item" style="color: var(--accent);"><i class="fa-solid fa-power-off"></i> Cerrar Sesión</a>
     </div>
 
-    <!-- CABECERA -->
-    <header>
-        <div class="logo"><span class="cyan">FRANCIS</span> <span class="pink">HACK</span></div>
-        <div class="header-right">
-            <div class="bell"><i class="fa-solid fa-bell"></i><span class="badge">48</span></div>
-            <div class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    <!-- PANEL DE SALDO -->
+    <div class="user-panel">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:35px; height:35px; border:1px solid var(--primary); border-radius:50%; display:flex; align-items:center; justify-content:center;">👤</div>
+            <span>BIENVENIDO, <b id="user-name">ESTARLIN</b></span>
         </div>
-    </header>
-
-    <div class="app-content">
-        
-        <!-- SECCIÓN 1: INICIO -->
-        <section id="home" class="page-section active">
-            <div class="hero">
-                <div class="glow-circle"><i class="fa-solid fa-gamepad"></i></div>
-                <h1>FRANCIS<span class="pink">HACK</span></h1>
-                <p class="subtitle">STORE</p>
+        <div class="balance-container">
+            <div class="balance-box">
+                <small style="color:gray;">SALDO PRINCIPAL</small>
+                <div style="color:var(--primary); font-size:1.2rem; font-weight:bold;">$0.05</div>
             </div>
-
-            <div class="balance-grid">
-                <div class="b-card cyan-b">
-                    <i class="fa-solid fa-wallet"></i>
-                    <p>SALDO PRINCIPAL</p>
-                    <h2 id="user-balance">$0.00</h2>
-                </div>
-                <div class="b-card pink-b">
-                    <i class="fa-solid fa-gift"></i>
-                    <p>SALDO BONUS</p>
-                    <h2>$0.00</h2>
-                </div>
+            <div class="balance-box" style="border-color:var(--accent);">
+                <small style="color:gray;">SALDO BONUS</small>
+                <div style="color:var(--accent); font-size:1.2rem; font-weight:bold;">$0.00</div>
             </div>
-
-            <div class="actions">
-                <button class="btn-main cyan-g" onclick="showSection('tienda')"><i class="fa-solid fa-rocket"></i> EXPLORAR TIENDA</button>
-                <button class="btn-main outline-p" onclick="showSection('pagos')"><i class="fa-solid fa-plus"></i> RECARGAR SALDO</button>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 2: TIENDA -->
-        <section id="tienda" class="page-section">
-            <h2 class="title-sec">PRODUCTOS</h2>
-            <div class="grid-container">
-                <div class="p-card">
-                    <div class="p-header" style="background-image: url('https://i.imgur.com/8Q9Z5Ym.jpeg');"></div>
-                    <div class="p-body">
-                        <h3>BR MODS MOBILE</h3>
-                        <p>HEAD 100% ESP SPEED AIMSILENT - VIP</p>
-                        <div class="p-footer">
-                            <span class="p-price">$2.50</span>
-                            <button class="buy-btn" onclick="comprar('BR MODS', 2.5)">COMPRAR</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-card">
-                    <div class="p-header" style="background-image: url('https://i.imgur.com/k6lT5pL.jpeg');"></div>
-                    <div class="p-body">
-                        <h3>STRIK BR VIP</h3>
-                        <p>AIMBOT SILENT AIM ESP LINE - TODOS LOS DISPOSITIVOS</p>
-                        <div class="p-footer">
-                            <span class="p-price">$5.00</span>
-                            <button class="buy-btn" onclick="comprar('STRIK BR', 5.0)">COMPRAR</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="back-link" onclick="showSection('home')">Ir al Inicio</button>
-        </section>
-
-        <!-- SECCIÓN 3: PAGOS -->
-        <section id="pagos" class="page-section">
-            <h2 class="title-sec">MÉTODOS DE PAGO</h2>
-            <div class="pay-grid">
-                <div class="pay-card" onclick="mostrarDatos('PayPal')"><i class="fa-brands fa-paypal"></i><span>PayPal</span></div>
-                <div class="pay-card" onclick="mostrarDatos('Binance')"><i class="fa-solid fa-coins"></i><span>Binance</span></div>
-                <div class="pay-card" onclick="mostrarDatos('BHD')"><i class="fa-solid fa-building-columns"></i><span>BHD</span></div>
-                <div class="pay-card" onclick="mostrarDatos('Yape')"><i class="fa-solid fa-mobile-screen"></i><span>Yape Perú</span></div>
-                <div class="pay-card" onclick="mostrarDatos('Zelle')"><i class="fa-solid fa-bolt"></i><span>Zelle</span></div>
-            </div>
-            <button class="back-link" onclick="showSection('home')">Cancelar</button>
-        </section>
-
+        </div>
     </div>
 
-    <!-- MODAL DE DATOS DE PAGO -->
-    <div id="payment-modal" class="modal">
+    <!-- SECCIÓN TIENDA -->
+    <div id="tienda-sec">
+        <div class="products-grid">
+            <div class="card-pro">
+                <i class="fa-solid fa-eye" style="font-size:2rem; color:var(--primary);"></i>
+                <h3>BR MODS</h3>
+                <div style="color:#00ff64; margin:10px 0;">$2.50 USD</div>
+                <button class="buy-btn" onclick="pagar('BR MODS')">ADQUIRIR</button>
+            </div>
+            <div class="card-pro">
+                <i class="fa-solid fa-crosshairs" style="font-size:2rem; color:var(--primary);"></i>
+                <h3>STRIK BR</h3>
+                <div style="color:#00ff64; margin:10px 0;">$5.00 USD</div>
+                <button class="buy-btn" onclick="pagar('STRIK BR')">ADQUIRIR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN PAGOS -->
+    <div id="pagos-sec" style="padding:20px;">
+        <h2 style="color:var(--primary); text-align:center;">MÉTODOS DE PAGO</h2>
+        <div class="products-grid">
+            <div class="card-pro" onclick="abrirPago('BHD')"><i class="fa-solid fa-building-columns"></i><br>BHD</div>
+            <div class="card-pro" onclick="abrirPago('PayPal')"><i class="fa-brands fa-paypal"></i><br>PayPal</div>
+            <div class="card-pro" onclick="abrirPago('Binance')"><i class="fa-solid fa-coins"></i><br>Binance</div>
+            <div class="card-pro" onclick="abrirPago('Zelle')"><i class="fa-solid fa-bolt"></i><br>Zelle</div>
+            <div class="card-pro" onclick="abrirPago('Yape')"><i class="fa-solid fa-qrcode"></i><br>Yape</div>
+        </div>
+    </div>
+
+    <!-- MODAL DE PAGO -->
+    <div id="modalPago" class="modal">
         <div class="modal-content">
-            <h3 id="modal-title">Datos de Pago</h3>
-            <p id="modal-info" class="info-text"></p>
-            <button class="btn-copy" onclick="copyInfo()">COPIAR DATOS</button>
-            <button class="btn-wa" onclick="confirmarPago()">ENVIAR COMPROBANTE</button>
-            <button class="btn-close" onclick="closeModal()">CERRAR</button>
+            <h3 id="pago-titulo">Datos de Pago</h3>
+            <div id="pago-datos" class="info-pago"></div>
+            <button onclick="copiarDatos()" style="width:100%; padding:10px; margin-bottom:10px;">COPIAR DATOS</button>
+            <button onclick="confirmarWA()" style="width:100%; padding:10px; background:#25d366; border:none; color:white;">ENVIAR COMPROBANTE</button>
+            <p onclick="cerrarModal()" style="margin-top:20px; cursor:pointer; color:gray;">CERRAR</p>
         </div>
     </div>
 
-    <a href="https://wa.me/17543171482" class="wa-fixed"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://wa.me/18493931148" class="fab"><i class="fa-brands fa-whatsapp" style="color:white;"></i></a>
 
     <script>
-        const infoPagos = {
+        function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
+
+        const datosBancos = {
+            'BHD': 'Cuenta: 36547230017\nTitular: Lisbeth María peña',
             'PayPal': 'Correo: realh7551@gmail.com',
             'Binance': 'Correo: mrfresayt@gmail.com',
-            'BHD': 'Cuenta: 36547230017 - Titular: Lisbeth María Peña',
-            'Yape': 'Número: 928574897 - Jaime',
-            'Zelle': 'Titular: David Lomba - Cel: +1 (754) 317-1482'
+            'Zelle': 'Titular: David Lomba\nTel: +1 (754) 317-1482',
+            'Yape': 'Número: 928574897\nNombre: Jaime'
         };
 
-        let metodoSeleccionado = '';
+        let seleccion = "";
 
-        function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); }
-
-        function showSection(id) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(document.getElementById('sidebar').classList.contains('open')) toggleMenu();
+        function abrirPago(metodo) {
+            seleccion = metodo;
+            document.getElementById('pago-titulo').innerText = "Pagar con " + metodo;
+            document.getElementById('pago-datos').innerText = datosBancos[metodo];
+            document.getElementById('modalPago').style.display = "flex";
         }
 
-        function mostrarDatos(metodo) {
-            metodoSeleccionado = metodo;
-            document.getElementById('modal-title').innerText = 'Pagar con ' + metodo;
-            document.getElementById('modal-info').innerText = infoPagos[metodo];
-            document.getElementById('payment-modal').style.display = 'flex';
+        function cerrarModal() { document.getElementById('modalPago').style.display = "none"; }
+
+        function copiarDatos() {
+            const texto = document.getElementById('pago-datos').innerText;
+            navigator.clipboard.writeText(texto);
+            alert("Datos copiados!");
         }
 
-        function closeModal() { document.getElementById('payment-modal').style.display = 'none'; }
-
-        function copyInfo() {
-            const text = document.getElementById('modal-info').innerText;
-            navigator.clipboard.writeText(text);
-            alert('Datos copiados al portapapeles');
+        function confirmarWA() {
+            const msg = `Hola Francis, acabo de pagar por ${seleccion}. Aquí mi comprobante.`;
+            window.open(`https://wa.me/18493931148?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        function confirmarPago() {
-            const msg = `Hola Francis Hack, acabo de pagar por ${metodoSeleccionado}. Aquí tienes mi comprobante.`;
-            window.open(`https://wa.me/17543171482?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        let currentBalance = parseFloat(localStorage.getItem('saldo')) || 0.00;
-        document.getElementById('user-balance').innerText = `$${currentBalance.toFixed(2)}`;
-
-        function comprar(name, price) {
-            if(currentBalance >= price) {
-                currentBalance -= price;
-                localStorage.setItem('saldo', currentBalance);
-                document.getElementById('user-balance').innerText = `$${currentBalance.toFixed(2)}`;
-                alert(`¡Compra de ${name} exitosa!`);
+        function showSection(sec) {
+            if(sec === 'tienda') {
+                document.getElementById('tienda-sec').style.display = 'block';
+                document.getElementById('pagos-sec').style.display = 'none';
             } else {
-                alert('Saldo insuficiente.');
-                showSection('pagos');
+                document.getElementById('tienda-sec').style.display = 'none';
+                document.getElementById('pagos-sec').style.display = 'block';
             }
+            toggleMenu();
         }
     </script>
 </body>
