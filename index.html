@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>estarlinhacks | VIP PANEL</title>
+    <title>estarlinhacks | VIP SHOP</title>
     <style>
         :root {
             --color-principal: #660000;
@@ -17,78 +17,113 @@
             margin: 0;
             text-align: center;
             overflow-x: hidden;
+            transition: 1s;
         }
 
-        /* --- MENÚ LATERAL (SIDEBAR) --- */
+        /* --- MENÚ LATERAL MEJORADO --- */
         .menu-icon {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 2rem;
+            top: 15px;
+            right: 15px;
+            font-size: 2.5rem;
             cursor: pointer;
-            z-index: 2000;
-            color: var(--color-brillo);
-            text-shadow: 0 0 10px var(--color-principal);
+            z-index: 5000;
+            color: white;
+            background: var(--color-principal);
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 10px;
+            border: 2px solid var(--color-brillo);
+            box-shadow: 0 0 15px var(--color-brillo);
         }
 
         .sidebar {
             position: fixed;
             top: 0;
-            right: -300px; /* Escondido */
-            width: 250px;
+            right: -300px; /* Oculto por defecto */
+            width: 260px;
             height: 100%;
-            background: rgba(10, 0, 0, 0.95);
-            border-left: 2px solid var(--color-principal);
-            transition: 0.5s;
-            z-index: 1999;
+            background: rgba(10, 0, 0, 0.98);
+            border-left: 3px solid var(--color-principal);
+            transition: 0.5s ease;
+            z-index: 4999;
             padding-top: 80px;
             text-align: left;
         }
 
         .sidebar a {
-            padding: 20px 25px;
+            padding: 15px 25px;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: white;
             display: block;
             border-bottom: 1px solid #222;
+        }
+
+        .sidebar a:hover { background: var(--color-principal); padding-left: 35px; }
+
+        /* --- DISEÑO DE LA TIENDA --- */
+        .stats-bar { background: #000; padding: 10px; font-size: 0.8rem; border-bottom: 2px solid var(--color-principal); display: flex; justify-content: space-around; }
+        
+        .oferta-reloj {
+            background: var(--color-principal);
+            color: white;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 0 0 20px 20px;
+            display: inline-block;
+            box-shadow: 0 0 15px var(--color-brillo);
+            margin-bottom: 20px;
+        }
+
+        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px; }
+        
+        .card {
+            background: rgba(17, 17, 17, 0.9);
+            border: 2px solid var(--color-principal);
+            border-radius: 15px;
+            width: 280px;
+            padding: 15px;
             transition: 0.3s;
         }
 
-        .sidebar a:hover {
-            background: var(--color-principal);
-            padding-left: 35px;
-        }
-
-        /* --- RESTO DE LA PÁGINA --- */
-        .stats-bar { background: #000; padding: 10px; font-size: 0.8rem; border-bottom: 2px solid var(--color-principal); display: flex; justify-content: space-around; }
-        .oferta-reloj { background: var(--color-principal); color: white; padding: 10px; font-size: 1.1rem; border-radius: 0 0 20px 20px; display: inline-block; box-shadow: 0 0 15px var(--color-brillo); margin-bottom: 20px;}
-        
-        .container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 20px; }
-        .card { background: rgba(17, 17, 17, 0.9); border: 2px solid var(--color-principal); border-radius: 15px; width: 280px; padding: 15px; transition: 0.3s; }
-        .card:hover { border-color: var(--color-brillo); transform: translateY(-5px); }
         .icon-box { font-size: 3rem; background: #000; border-radius: 10px; padding: 10px; margin-bottom: 10px; }
         .precio { color: #00ff00; font-size: 1.6rem; font-weight: bold; margin: 10px 0; }
-        .btn-comprar { display: block; padding: 12px; background: var(--color-principal); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; border: 1px solid var(--color-brillo); }
+        
+        .btn-comprar {
+            display: block;
+            padding: 12px;
+            background: var(--color-principal);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 1px solid var(--color-brillo);
+        }
+
+        .testigos { background: #111; padding: 30px 10px; margin-top: 40px; border-top: 1px solid #333; }
+        .testigo { font-style: italic; color: #aaa; font-size: 0.8rem; margin: 15px auto; max-width: 400px; border-left: 3px solid var(--color-brillo); padding-left: 10px; text-align: left; }
 
         .botones-flotantes { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-        .btn-contacto { padding: 15px 20px; border-radius: 30px; color: white; text-decoration: none; font-weight: bold; font-size: 0.8rem; text-align: center; }
-        .dueno { background: #008000; } .soporte { background: #075e54; }
+        .btn-contacto { padding: 12px 18px; border-radius: 30px; color: white; text-decoration: none; font-weight: bold; font-size: 0.8rem; }
+        .dueno { background: #008000; border: 1px solid #00ff00; }
+        .soporte { background: #075e54; border: 1px solid #25d366; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Icono de 3 líneas -->
+    <!-- BOTON MENU HAMBURGUESA -->
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
 
-    <!-- El Menú Sidebar -->
+    <!-- SIDEBAR -->
     <div id="mySidebar" class="sidebar">
-        <a href="https://wa.me/18493931148?text=Quiero%20recargar%20saldo">💰 Recargar Saldo</a>
-        <a href="#" onclick="alert('Aceptamos: \n- PayPal \n- Binance (USDT) \n- Banco Popular \n- Reservas')">💳 Métodos de Pago</a>
-        <a href="https://wa.me/18493931148?text=Dame%20el%20link%20de%20mis%20archivos">📂 Link de Archivos</a>
+        <a href="https://wa.me/18493931148?text=Hola%20Dueño,%20quiero%20RECARGAR%20SALDO">💰 Recargar Saldo</a>
+        <a href="#" onclick="alert('MÉTODOS DE PAGO:\n- PayPal\n- Binance USDT\n- Banco Popular\n- Banreservas')">💳 Métodos de Pago</a>
+        <a href="https://wa.me/18493931148?text=Hola,%20solicito%20el%20link%20de%20mis%20archivos">📂 Link de Archivos</a>
         <a href="#" onclick="alert('Inicia sesión para ver tu perfil')">👤 Mi Perfil VIP</a>
-        <a href="#" style="color: red; margin-top: 50px;" onclick="toggleMenu()">✖ Cerrar Menú</a>
+        <a href="#" style="color: red; margin-top: 30px; text-align: center;" onclick="toggleMenu()">CERRAR MENÚ ✖</a>
     </div>
 
     <div class="stats-bar">
@@ -102,7 +137,7 @@
 
     <header>
         <h1>estarlinhacks</h1>
-        <p style="color: var(--color-brillo);">SHOP & PANEL RD</p>
+        <p style="color: var(--color-brillo);">THE DOMINICAN POWER</p>
     </header>
 
     <div class="container">
@@ -118,6 +153,24 @@
             <div class="precio">$15.00 USD</div>
             <a href="https://wa.me/18493931148" class="btn-comprar">COMPRAR</a>
         </div>
+        <div class="card">
+            <div class="icon-box">🚗</div>
+            <h3>CARRO VOLADOR</h3>
+            <div class="precio">$10.00 USD</div>
+            <a href="https://wa.me/18493931148" class="btn-comprar">COMPRAR</a>
+        </div>
+        <div class="card">
+            <div class="icon-box">📡</div>
+            <h3>ANTENA HEAD</h3>
+            <div class="precio">$5.00 USD</div>
+            <a href="https://wa.me/18493931148" class="btn-comprar">COMPRAR</a>
+        </div>
+    </div>
+
+    <div class="testigos">
+        <h4>💬 TESTIMONIOS REALES</h4>
+        <div class="testigo">"El regedit me cambió la vida, ahora pego todo rojo." - <b>Sniper_RD</b></div>
+        <div class="testigo">"El Aimbot no da ban, excelente servicio." - <b>ElTigre_FF</b></div>
     </div>
 
     <div class="botones-flotantes">
@@ -126,7 +179,7 @@
     </div>
 
     <script>
-        // Función para abrir y cerrar el menú
+        // Función para abrir/cerrar el menú
         function toggleMenu() {
             var sidebar = document.getElementById("mySidebar");
             if (sidebar.style.right === "0px") {
@@ -145,18 +198,18 @@
             document.documentElement.style.setProperty('--color-brillo', colors[i].b);
         }, 5000);
 
-        // Timer simple
+        // Timer
         function startTimer(duration, display) {
-            var timer = duration, hours, minutes, seconds;
+            var timer = duration, h, m, s;
             setInterval(function () {
-                hours = parseInt(timer / 3600, 10);
-                minutes = parseInt((timer % 3600) / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-                display.textContent = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                h = parseInt(timer / 3600, 10);
+                m = parseInt((timer % 3600) / 60, 10);
+                s = parseInt(timer % 60, 10);
+                display.textContent = (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
                 if (--timer < 0) timer = duration;
             }, 1000);
         }
-        window.onload = function () { startTimer(35000, document.querySelector('#timer')); };
+        window.onload = function () { startTimer(35500, document.querySelector('#timer')); };
     </script>
 </body>
 </html>
