@@ -3,198 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstarlinHacks | Login & Register</title>
-    <!-- Firebase SDK -->
+    <title>EstarlinHacks | Premium Edition</title>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-color: #0b0e16;
-            --input-bg: #1a1f2e;
-            --text-gray: #8e94a5;
-            --gradient: linear-gradient(90deg, #00f2ff, #ff007a, #00ff88);
+            --bg-deep: #050000;
+            --wine-red: #8b0000;
+            --bright-red: #ff0000;
+            --input-bg: #120a0a;
+            --text-gray: #a5a5a5;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at center, #2a0000 0%, #050000 100%);
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }
 
-        .container { width: 100%; max-width: 400px; text-align: center; }
+        .container { width: 90%; max-width: 400px; text-align: center; }
 
-        /* LOGO TIPO COHETE */
+        /* LOGO CON DEGRADADO ROJO VINO */
         .logo-box {
-            width: 80px; height: 80px;
-            background: linear-gradient(135deg, #00f2ff, #ff007a);
-            border-radius: 20px;
-            margin: 0 auto 20px;
+            width: 85px; height: 85px;
+            background: linear-gradient(45deg, var(--wine-red), var(--bright-red));
+            border-radius: 22px; margin: 0 auto 20px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            font-size: 45px; box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
         }
 
-        h1 { font-size: 28px; margin-bottom: 5px; }
-        .subtitle { color: var(--text-gray); font-size: 14px; margin-bottom: 30px; }
+        h1 { font-family: 'Orbitron', sans-serif; font-size: 26px; color: white; text-shadow: 0 0 10px var(--bright-red); }
+        .subtitle { color: var(--text-gray); font-size: 13px; margin-bottom: 30px; }
 
-        /* CAMPOS DE ENTRADA */
-        .form-group { text-align: left; margin-bottom: 20px; }
-        label { display: block; font-size: 12px; font-weight: 600; color: white; margin-bottom: 8px; text-transform: uppercase; }
-        
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { font-size: 11px; font-weight: bold; color: var(--bright-red); margin-left: 5px; text-transform: uppercase; }
+
         .input-wrapper {
-            position: relative;
             background: var(--input-bg);
-            border-radius: 12px;
-            border: 1px solid #2d3446;
-            display: flex; align-items: center;
-            padding: 0 15px;
-        }
-
-        .input-wrapper i { color: var(--text-gray); margin-right: 10px; }
-
-        input, select {
-            width: 100%;
-            background: transparent;
-            border: none;
-            padding: 15px 0;
-            color: white;
-            outline: none;
-            font-size: 14px;
-        }
-
-        /* BOTÓN GRADIENTE TIPO CUBANHACKS */
-        .btn-main {
-            width: 100%;
-            padding: 16px;
-            border-radius: 12px;
-            border: none;
-            background: var(--gradient);
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            border-radius: 10px; border: 1px solid #300000;
+            display: flex; align-items: center; padding: 0 15px; margin-top: 5px;
             transition: 0.3s;
         }
-        .btn-main:hover { opacity: 0.9; transform: scale(1.02); }
+        .input-wrapper:focus-within { border-color: var(--bright-red); box-shadow: 0 0 10px rgba(255,0,0,0.2); }
 
-        .footer-link { margin-top: 25px; font-size: 14px; color: #00f2ff; cursor: pointer; text-decoration: none; display: block; }
-        .forgot-pass { color: var(--text-gray); font-size: 13px; margin-top: 15px; cursor: pointer; }
+        input, select {
+            width: 100%; background: transparent; border: none; padding: 14px 5px;
+            color: white; outline: none; font-size: 14px;
+        }
 
+        /* BOTÓN ROJO VINO BRILLANTE */
+        .btn-main {
+            width: 100%; padding: 16px; border-radius: 10px; border: none;
+            background: linear-gradient(90deg, #4a0000, #ff0000, #4a0000);
+            background-size: 200% auto;
+            color: white; font-weight: bold; font-family: 'Orbitron', sans-serif;
+            cursor: pointer; margin-top: 15px; transition: 0.5s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .btn-main:hover { background-position: right center; transform: translateY(-2px); }
+
+        .footer-link { margin-top: 20px; color: var(--bright-red); cursor: pointer; font-size: 14px; font-weight: bold; }
         .hidden { display: none; }
 
         /* PANEL VIP */
-        .vip-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid #2d3446;
-            padding: 30px; border-radius: 20px;
-        }
-        .days-circle { font-size: 60px; color: #00ff88; font-weight: 800; margin: 20px 0; }
+        .vip-card { background: rgba(20, 0, 0, 0.6); padding: 40px 20px; border-radius: 20px; border: 1px solid var(--wine-red); }
+        .balance-num { font-size: 70px; font-family: 'Orbitron', sans-serif; color: #ff0000; text-shadow: 0 0 20px #ff0000; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- PANTALLA DE INICIO DE SESIÓN -->
+        <!-- LOGIN -->
         <div id="login-screen">
             <div class="logo-box">🚀</div>
-            <h1>EstarlinHacks</h1>
-            <p class="subtitle">Accede a tu cuenta para continuar</p>
+            <h1>ESTARLIN<span style="color:var(--bright-red)">HACKS</span></h1>
+            <p class="subtitle">Acceso Premium al Sistema</p>
 
             <div class="form-group">
-                <label>Usuario / Email</label>
+                <label>Usuario o Correo</label>
                 <div class="input-wrapper">
-                    <i>👤</i>
-                    <input type="email" id="login-email" placeholder="Ingresa tu correo">
+                    <input type="text" id="login-id" placeholder="Tu usuario">
                 </div>
             </div>
-
             <div class="form-group">
                 <label>Contraseña</label>
                 <div class="input-wrapper">
-                    <i>🔒</i>
-                    <input type="password" id="login-pass" placeholder="Ingresa tu contraseña">
-                    <i style="margin-left:auto; cursor:pointer">👁️</i>
+                    <input type="password" id="login-pass" placeholder="••••••••">
                 </div>
             </div>
 
-            <button class="btn-main" onclick="processLogin()">
-                <span>➜</span> INICIAR SESIÓN
-            </button>
-
-            <p class="footer-link" onclick="toggleScreens()">¿No tienes cuenta? Regístrate aquí</p>
-            <p class="forgot-pass">¿Olvidaste tu contraseña?</p>
+            <button class="btn-main" onclick="doLogin()">INICIAR SESIÓN</button>
+            <p class="footer-link" onclick="toggle()">¿No tienes cuenta? Registrate</p>
         </div>
 
-        <!-- PANTALLA DE REGISTRO (COMO LA IMAGEN) -->
+        <!-- REGISTRO -->
         <div id="register-screen" class="hidden">
             <div class="logo-box">👤</div>
-            <h1>Crear Cuenta</h1>
-            <p class="subtitle">Completa el formulario para comenzar</p>
+            <h1>REGISTRO</h1>
+            <p class="subtitle">Crea tu perfil de usuario</p>
 
             <div class="form-group">
                 <label>Nombre de Usuario</label>
-                <div class="input-wrapper">
-                    <i>@</i>
-                    <input type="text" id="reg-user" placeholder="Usuario único">
-                </div>
+                <div class="input-wrapper"><input type="text" id="reg-user" placeholder="Ej: Estarlin_01"></div>
             </div>
-
             <div class="form-group">
-                <label>WhatsApp (Obligatorio)</label>
-                <div class="input-wrapper" style="margin-bottom: 5px;">
-                    <select id="country-code" style="width: 40%;">
-                        <option value="+1">🇩🇴 +1</option>
-                        <option value="+52">🇲🇽 +52</option>
-                        <option value="+1">🇺🇸 +1</option>
-                    </select>
-                </div>
+                <label>WhatsApp</label>
                 <div class="input-wrapper">
-                    <i>📞</i>
-                    <input type="number" id="reg-phone" placeholder="Número de teléfono">
+                    <select id="prefix" style="width: 80px;"><option value="+1">🇩🇴 +1</option></select>
+                    <input type="number" id="reg-phone" placeholder="849...">
                 </div>
             </div>
-
             <div class="form-group">
                 <label>Contraseña</label>
-                <div class="input-wrapper">
-                    <i>🔒</i>
-                    <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres">
-                </div>
+                <div class="input-wrapper"><input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres"></div>
             </div>
 
-            <button class="btn-main" onclick="processRegister()">
-                🚀 CREAR CUENTA
-            </button>
-
-            <p class="footer-link" onclick="toggleScreens()">¿Ya tienes cuenta? Inicia sesión aquí</p>
+            <button class="btn-main" onclick="doRegister()">CREAR CUENTA</button>
+            <p class="footer-link" onclick="toggle()">Ya tengo cuenta, volver</p>
         </div>
 
-        <!-- PANEL VIP DESPUÉS DE LOGUEAR -->
+        <!-- DASHBOARD -->
         <div id="vip-screen" class="hidden vip-card">
-            <h1 style="color: #00f2ff;">BIENVENIDO VIP</h1>
-            <p id="user-display" style="font-size: 14px; margin-bottom: 20px;"></p>
-            <div class="subtitle">TIEMPO RESTANTE</div>
-            <div class="days-circle" id="user-balance">0</div>
-            <p style="color: #00ff88; margin-bottom: 20px;">DÍAS ACTIVOS</p>
-            <button class="btn-main" style="background: #f1c40f; color: black;" onclick="window.open('https://rosaaquinodiaz9.lemonsqueezy.com/checkout/buy/299a610c-6707-4554-b48d-09832dcf129a')">COMPRAR MÁS DÍAS</button>
-            <p class="forgot-pass" onclick="logout()" style="color: #ff4757;">Cerrar Sesión Segura</p>
+            <h1 id="greet">HOLA</h1>
+            <p class="subtitle">DIAS VIP DISPONIBLES</p>
+            <div class="balance-num" id="bal">0</div>
+            <button class="btn-main" onclick="window.open('https://rosaaquinodiaz9.lemonsqueezy.com/checkout/buy/299a610c-6707-4554-b48d-09832dcf129a')">AÑADIR TIEMPO</button>
+            <p style="margin-top:20px; color:gray; cursor:pointer;" onclick="location.reload()">Cerrar Sesión</p>
         </div>
     </div>
 
     <script>
-        // CONFIGURACIÓN DE TU FIREBASE
+        // CONFIGURACIÓN CORREGIDA
         const firebaseConfig = {
-            apiKey: "AIzaSyCyfGnvZCaJbZQ54N3lz6Qqd4W8O1vNlIk",
+            apiKey: "AIzaSyCyfGnvZCaJbZQ54N3lz6Qqd4W8O1vNlIk", 
             authDomain: "estarlinhacks-af6cd.firebaseapp.com",
             databaseURL: "https://estarlinhacks-af6cd-default-rtdb.firebaseio.com",
             projectId: "estarlinhacks-af6cd",
@@ -207,50 +154,53 @@
         const auth = firebase.auth();
         const db = firebase.database();
 
-        function toggleScreens() {
+        function toggle() {
             document.getElementById('login-screen').classList.toggle('hidden');
             document.getElementById('register-screen').classList.toggle('hidden');
         }
 
-        function processRegister() {
-            const email = document.getElementById('reg-user').value + "@estarlin.com"; // Crea un email falso basado en usuario
+        // FUNCIÓN REGISTRO REAL
+        function doRegister() {
+            const user = document.getElementById('reg-user').value;
             const pass = document.getElementById('reg-pass').value;
-            const phone = document.getElementById('country-code').value + document.getElementById('reg-phone').value;
+            const phone = document.getElementById('prefix').value + document.getElementById('reg-phone').value;
+            const email = user.trim().toLowerCase() + "@estarlin.com";
+
+            if(user.length < 3 || pass.length < 6) return alert("Usuario corto o contraseña menor a 6 caracteres");
 
             auth.createUserWithEmailAndPassword(email, pass).then(res => {
                 db.ref('users/' + res.user.uid).set({
-                    username: document.getElementById('reg-user').value,
+                    username: user,
                     whatsapp: phone,
                     balance: 0
+                }).then(() => {
+                    alert("¡Cuenta Creada!");
                 });
-                alert("Cuenta creada con éxito");
-            }).catch(e => alert("Error: " + e.message));
+            }).catch(e => alert("Error: Usuario ya existe o datos inválidos"));
         }
 
-        function processLogin() {
-            const email = document.getElementById('login-email').value;
+        // FUNCIÓN LOGIN REAL
+        function doLogin() {
+            const id = document.getElementById('login-id').value;
             const pass = document.getElementById('login-pass').value;
-            // Si el usuario pone solo el nombre, le sumamos el dominio
-            const finalEmail = email.includes('@') ? email : email + "@estarlin.com";
+            const email = id.includes('@') ? id : id.trim().toLowerCase() + "@estarlin.com";
 
-            auth.signInWithEmailAndPassword(finalEmail, pass).catch(e => alert("Datos incorrectos"));
+            auth.signInWithEmailAndPassword(email, pass).catch(e => alert("Usuario o clave incorrectos"));
         }
 
-        auth.onAuthStateChanged(user => {
-            if(user) {
+        auth.onAuthStateChanged(u => {
+            if(u) {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('register-screen').classList.add('hidden');
                 document.getElementById('vip-screen').classList.remove('hidden');
                 
-                db.ref('users/' + user.uid).on('value', snap => {
-                    const data = snap.val();
-                    document.getElementById('user-display').innerText = "Hola, " + data.username;
-                    document.getElementById('user-balance').innerText = data.balance || 0;
+                db.ref('users/' + u.uid).on('value', s => {
+                    const d = s.val();
+                    document.getElementById('greet').innerText = "HOLA, " + d.username.toUpperCase();
+                    document.getElementById('bal').innerText = d.balance || 0;
                 });
             }
         });
-
-        function logout() { auth.signOut().then(() => location.reload()); }
     </script>
 </body>
 </html>
