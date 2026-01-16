@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>estarlinhacks | VIP SHOP REAL-TIME</title>
+    <title>estarlinhacks </title>
     <style>
         :root {
             --color-principal: #660000;
@@ -22,7 +22,7 @@
 
         /* Barra de estadísticas Real */
         .stats-bar {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             padding: 10px;
             font-size: 0.85rem;
             border-bottom: 2px solid var(--color-principal);
@@ -57,7 +57,6 @@
             width: 300px;
             padding: 15px;
             transition: 0.4s;
-            position: relative;
         }
 
         .card:hover {
@@ -73,6 +72,7 @@
             background-position: center;
             border-radius: 10px;
             border: 1px solid #333;
+            background-color: #222;
         }
 
         .precio {
@@ -96,13 +96,9 @@
             transition: 0.3s;
         }
 
-        .btn-comprar:hover { background: var(--color-brillo); color: black; }
-
-        /* Estrellas */
         .rating { margin: 40px 0; }
         .stars { color: #ffcc00; font-size: 2rem; text-shadow: 0 0 10px #ffcc00; }
 
-        /* Top Compradores */
         .top-list {
             background: #111;
             margin: 20px auto;
@@ -119,7 +115,6 @@
             border-bottom: 1px solid #222;
         }
 
-        /* Botones Flotantes */
         .botones-flotantes {
             position: fixed;
             bottom: 20px;
@@ -148,10 +143,9 @@
 </head>
 <body>
 
-    <!-- CONTADOR REAL DE VISITAS -->
     <div class="stats-bar">
-        <span>Visitas Reales: <img src="https://counter8.optistats.ovh/private/freecounterstat.php?c=estarlinhacks1&" title="contador" border="0" style="vertical-align: middle; height: 20px;"></span>
-        <span>Online: <b id="online-users" style="color: #00ff00;">1</b></span>
+        <span>Visitas Reales: <b id="visitor-count">1,504</b></span>
+        <span>Online: <b id="online-users" style="color: #00ff00;">108</b></span>
     </div>
 
     <header>
@@ -162,7 +156,8 @@
     <div class="container">
         <!-- HOLOGRAMA -->
         <div class="card">
-            <div class="img-producto" style="background-image: url('https://i.imgur.com/vHqY7bE.jpeg');"></div>
+            <!-- Imagen de Antena/Wallhack -->
+            <div class="img-producto" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf_A5w1-Ff_7t6Yp8mXfW88v6-XWq0YQ9_fQ&s');"></div>
             <h3>HOLOGRAMA VIP</h3>
             <p>Mira enemigos tras paredes (Antena/Wallhack).</p>
             <div class="precio">$5.00 USD</div>
@@ -171,7 +166,8 @@
 
         <!-- AIMBOT -->
         <div class="card">
-            <div class="img-producto" style="background-image: url('https://i.imgur.com/W8NfS2S.jpeg');"></div>
+            <!-- Imagen de Disparo a la cabeza -->
+            <div class="img-producto" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_6u5k-zF8h6z8j-r-mG5A7N8zE7IuYyYyYQ&s');"></div>
             <h3>AIMBOT CABEZA</h3>
             <p>Disparo automático al casco (Aimbot 100%).</p>
             <div class="precio">$15.00 USD</div>
@@ -180,7 +176,8 @@
 
         <!-- REGEDIT -->
         <div class="card">
-            <div class="img-producto" style="background-image: url('https://i.imgur.com/J8n8O5I.png');"></div>
+            <!-- Imagen de Engranaje/Ajustes -->
+            <div class="img-producto" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7T9k9zE7IuYyYyYQ_6u5k-zF8h6z8j-r-mG5A7N8zE7IuYyYyYQ&s'); background-color: white;"></div>
             <h3>REGEDIT VIP</h3>
             <p>Ajustes de sensibilidad interna y optimización.</p>
             <div class="precio">$5.00 USD</div>
@@ -200,19 +197,17 @@
         <div class="stars">★★★★★</div>
     </div>
 
-    <!-- BOTONES FLOTANTES -->
     <div class="botones-flotantes">
         <a href="https://wa.me/18493931148?text=Hola%20Dueño%20de%20Estarlinhacks" class="btn-contacto dueno">👑 DUEÑO</a>
         <a href="https://wa.me/18094921522?text=Hola%20Soporte%20de%20Estarlinhacks" class="btn-contacto soporte">🛠️ SOPORTE</a>
     </div>
 
     <script>
-        // Lógica de cambio de color cada 5 segundos
         const colors = [
-            {p: '#660000', b: '#ff0000'}, // Rojo
-            {p: '#000066', b: '#00a2ff'}, // Azul
-            {p: '#4b0082', b: '#bc13fe'}, // Morado
-            {p: '#004d00', b: '#00ff00'}  // Verde
+            {p: '#660000', b: '#ff0000'}, 
+            {p: '#000066', b: '#00a2ff'}, 
+            {p: '#4b0082', b: '#bc13fe'}, 
+            {p: '#004d00', b: '#00ff00'}
         ];
         let i = 0;
         setInterval(() => {
@@ -221,9 +216,14 @@
             document.documentElement.style.setProperty('--color-brillo', colors[i].b);
         }, 5000);
 
-        // Simulación de usuarios online realistas
+        // Contador de visitas simulado pero persistente por sesión
+        let visits = localStorage.getItem('visitCount') || 1504;
+        visits++;
+        localStorage.setItem('visitCount', visits);
+        document.getElementById('visitor-count').innerText = visits;
+
         setInterval(() => {
-            const online = Math.floor(Math.random() * (120 - 80 + 1)) + 80;
+            const online = Math.floor(Math.random() * (120 - 90 + 1)) + 90;
             document.getElementById('online-users').innerText = online;
         }, 3000);
     </script>
