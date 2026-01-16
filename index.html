@@ -3,221 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>estarlinhacks | V3 ULTRA PRO</title>
+    <title>estarlinhacks | V3 ULTRA</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
-
-        :root {
-            --neon: #00f2ff;
-            --accent: #ff0055;
-            --bg: #050508;
-            --card-bg: rgba(15, 15, 20, 0.95);
-        }
-
-        body {
-            background: var(--bg);
-            color: white;
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* --- CABECERA --- */
-        .header-pro {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: #000;
-            border-bottom: 2px solid var(--neon);
-            position: sticky;
-            top: 0;
-            z-index: 3000;
-        }
-
-        .logo { font-family: 'Orbitron', sans-serif; color: var(--neon); font-size: 1.2rem; text-shadow: 0 0 10px var(--neon); }
-
-        .menu-toggle {
-            font-size: 2rem;
-            color: var(--neon);
-            cursor: pointer;
-            background: rgba(0, 242, 255, 0.1);
-            padding: 5px 12px;
-            border-radius: 8px;
-        }
-
-        /* --- SIDEBAR REAL --- */
-        .sidebar {
-            position: fixed;
-            top: 0; right: -100%;
-            width: 280px; height: 100%;
-            background: rgba(2, 2, 5, 0.98);
-            backdrop-filter: blur(15px);
-            border-left: 2px solid var(--neon);
-            transition: 0.4s ease-in-out;
-            z-index: 4000;
-            padding-top: 60px;
-        }
-
-        .sidebar.active { right: 0; }
-
-        .sidebar a {
-            padding: 20px;
-            display: block;
-            color: white;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 1.1rem;
-        }
-
-        .sidebar a:hover { background: var(--neon); color: black; }
-
-        /* --- DASHBOARD DE SALDO --- */
-        .dashboard { padding: 25px 15px; text-align: left; }
+        :root { --neon: #00f2ff; --accent: #ff0055; --bg: #050508; }
+        body { background: var(--bg); color: white; font-family: 'Rajdhani', sans-serif; margin: 0; }
+        .header { display: flex; justify-content: space-between; padding: 15px 20px; background: #000; border-bottom: 2px solid var(--neon); }
+        .logo { font-family: 'Orbitron'; color: var(--neon); text-shadow: 0 0 10px var(--neon); }
         
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        /* Dashboard Estilo Pro */
+        .dashboard { padding: 20px; background: radial-gradient(circle at top, rgba(0,242,255,0.1), transparent); }
+        .stat-card { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; border-left: 4px solid var(--neon); margin-bottom: 15px; }
+        .val { font-family: 'Orbitron'; font-size: 1.5rem; color: var(--neon); }
+
+        /* Panel Admin Oculto */
+        #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        .pago-item { background: #111; padding: 15px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #333; }
+        .btn-aprobar { background: #00ff64; color: black; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         
-        .stat-card {
-            background: var(--card-bg);
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-left: 4px solid var(--neon);
-        }
-
-        .stat-card.bonus { border-left-color: var(--accent); }
-        .label { font-size: 0.7rem; color: #888; text-transform: uppercase; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-top: 5px; }
-
-        /* --- MODAL MÉTODOS DE PAGO --- */
-        #payment-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 5000;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
-        .payment-content {
-            background: #111;
-            border: 1px solid var(--neon);
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 500px;
-            margin: auto;
-        }
-
-        .pay-option {
-            background: rgba(255,255,255,0.05);
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border: 1px solid transparent;
-        }
-
-        .pay-option:hover { border-color: var(--neon); }
-
-        /* --- PRODUCTOS --- */
-        .products { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; }
-        .item { background: var(--card-bg); border-radius: 20px; padding: 15px; border: 1px solid #1a1a1e; }
-        .price { color: #00ff64; font-weight: bold; margin: 10px 0; }
-        .buy-btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background: linear-gradient(45deg, var(--neon), #0066ff); color: white; font-weight: bold; }
-
+        .buy-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, var(--neon), #0066ff); border: none; color: white; border-radius: 10px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <div class="header-pro">
+    <div class="header">
         <div class="logo">ESTARLINHACKS</div>
-        <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+        <div id="user-info" style="font-size: 0.8rem;">Cargando...</div>
     </div>
 
-    <!-- SIDEBAR -->
-    <div id="sidebar" class="sidebar">
-        <div style="padding: 20px; color: var(--accent); font-weight: bold;" onclick="toggleSidebar()">✖ CERRAR</div>
-        <a href="https://wa.me/18493931148?text=Quiero%20Recargar%20Saldo">💰 Recargar Saldo</a>
-        <a href="#" onclick="openPayments()">💳 Métodos de Pago</a>
-        <a href="https://wa.me/18493931148?text=Link%20de%20Archivos">📂 Mis Archivos</a>
-        <a href="https://wa.me/18094921522" style="color: var(--neon);">🛠️ Soporte VIP</a>
-    </div>
-
-    <!-- DASHBOARD -->
+    <!-- PANEL DE SALDO -->
     <div class="dashboard">
-        <div style="margin-bottom: 15px; font-weight: bold;">OPERATIVO: <span style="color: var(--neon);">ESTARLIN_RD</span></div>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="label">Créditos Netos</div>
-                <div class="value">$0.05</div>
-            </div>
-            <div class="stat-card bonus">
-                <div class="label">Bono Extra</div>
-                <div class="value" style="color: var(--accent);">$0.00</div>
-            </div>
+        <div class="stat-card">
+            <small>CRÉDITOS DISPONIBLES</small>
+            <div id="user-balance" class="val">$0.00</div>
         </div>
+        <button class="buy-btn" onclick="mostrarPagos()">RECARGAR SALDO</button>
     </div>
 
-    <!-- TIENDA -->
-    <div class="products">
-        <div class="item">
-            <div style="font-size: 2rem;">👁️</div>
+    <!-- SECCIÓN DE PRODUCTOS -->
+    <div style="padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div class="stat-card" style="border-left-color: var(--accent);">
             <h4>HOLOGRAMA</h4>
-            <div class="price">$5.00 USD</div>
-            <button class="buy-btn" onclick="window.location.href='https://wa.me/18493931148'">ADQUIRIR</button>
+            <div style="color: #00ff64;">$5.00</div>
+            <button class="buy-btn" style="margin-top:10px" onclick="comprar('Holograma', 5)">COMPRAR</button>
         </div>
-        <div class="item">
-            <div style="font-size: 2rem;">🎯</div>
-            <h4>AIMBOT</h4>
-            <div class="price">$15.00 USD</div>
-            <button class="buy-btn" onclick="window.location.href='https://wa.me/18493931148'">ADQUIRIR</button>
+        <div class="stat-card" style="border-left-color: var(--accent);">
+            <h4>AIMBOT 100%</h4>
+            <div style="color: #00ff64;">$15.00</div>
+            <button class="buy-btn" style="margin-top:10px" onclick="comprar('Aimbot', 15)">COMPRAR</button>
         </div>
     </div>
 
-    <!-- VENTANA DE PAGOS (MODAL) -->
-    <div id="payment-modal">
-        <div class="payment-content">
-            <h2 style="color: var(--neon);">MÉTODOS DE PAGO</h2>
-            <p>Selecciona tu país o plataforma:</p>
-            
-            <div class="pay-option"><span>🌎</span> <b>PAYPAL / TARJETAS</b></div>
-            <div class="pay-option"><span>🪙</span> <b>BINANCE (USDT)</b></div>
-            <div class="pay-option"><span>🇩🇴</span> <b>BANCO POPULAR / RESERVAS</b></div>
-            <div class="pay-option"><span>🇨🇺</span> <b>TRANSFERMOVIL (CUBA)</b></div>
-            <div class="pay-option"><span>🇲🇽</span> <b>OXXO / MERCADO PAGO</b></div>
-            <div class="pay-option"><span>🇨🇴</span> <b>NEQUI / DAVIPLATA</b></div>
-            
-            <button onclick="closePayments()" style="width: 100%; padding: 15px; margin-top: 20px; background: var(--accent); border: none; color: white; border-radius: 10px; font-weight: bold;">VOLVER</button>
-            <p style="font-size: 0.8rem; margin-top: 15px; color: #888;">Si tu país no aparece, contacta a soporte para pago directo.</p>
-        </div>
+    <!-- PANEL ADMINISTRADOR (BOTÓN OCULTO) -->
+    <button onclick="loginAdmin()" style="opacity: 0.1; background: none; border: none; color: white; position: fixed; bottom: 0;">.</button>
+
+    <div id="admin-panel">
+        <h2 style="color: var(--neon);">PANEL DE APROBACIÓN - ESTARLIN</h2>
+        <div id="lista-pendientes"></div>
+        <button onclick="document.getElementById('admin-panel').style.display='none'" style="background: red; color: white; width: 100%; padding: 15px; border: none; margin-top: 20px;">CERRAR PANEL</button>
     </div>
 
     <script>
-        // Lógica del Sidebar
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
+        // CONFIGURACIÓN DE TU FIREBASE
+        const firebaseConfig = {
+          apiKey: "AIzaSyCyfGnvZCaJbZQ54W31z6GQdIRQZc4Lk5A",
+          authDomain: "estarlinhacks-af6cd.firebaseapp.com",
+          projectId: "estarlinhacks-af6cd",
+          storageBucket: "estarlinhacks-af6cd.firebasestorage.app",
+          messagingSenderId: "815848600809",
+          appId: "1:815848600809:web:92ec6140947813f3456c78"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // SIMULACIÓN DE USUARIO (En el futuro agregaremos el login real)
+        let currentUser = "Estarlin_User"; 
+
+        // Leer saldo automáticamente
+        function cargarSaldo() {
+            db.collection("usuarios").doc(currentUser).onSnapshot((doc) => {
+                if (doc.exists) {
+                    document.getElementById('user-balance').innerText = "$" + doc.data().saldo.toFixed(2);
+                    document.getElementById('user-info').innerText = "HOLA, " + currentUser;
+                } else {
+                    // Crear usuario si no existe
+                    db.collection("usuarios").doc(currentUser).set({ saldo: 0.00 });
+                }
+            });
+        }
+        cargarSaldo();
+
+        // Función para comprar
+        function comprar(item, precio) {
+            db.collection("usuarios").doc(currentUser).get().then((doc) => {
+                let saldoActual = doc.data().saldo;
+                if(saldoActual >= precio) {
+                    db.collection("usuarios").doc(currentUser).update({ saldo: saldoActual - precio });
+                    alert("¡Compra exitosa de " + item + "!");
+                } else {
+                    alert("Saldo insuficiente. Por favor recarga.");
+                }
+            });
         }
 
-        // Lógica de Pagos
-        function openPayments() {
-            document.getElementById('payment-modal').style.display = 'block';
-            toggleSidebar(); // Cierra el menú al abrir pagos
+        // Reportar Pago (Lo que hace el cliente)
+        function mostrarPagos() {
+            let ref = prompt("Ingresa el ID de Transacción de tu pago (PayPal/Banco):");
+            if(ref) {
+                db.collection("pagos_pendientes").add({
+                    usuario: currentUser,
+                    referencia: ref,
+                    fecha: new Date().toLocaleString(),
+                    monto: 10.00 // Puedes hacerlo variable
+                });
+                alert("Reporte enviado. Estarlin verificará tu pago en unos minutos.");
+            }
         }
 
-        function closePayments() {
-            document.getElementById('payment-modal').style.display = 'none';
+        // PANEL DE ADMINISTRADOR
+        function loginAdmin() {
+            let pass = prompt("Contraseña de Administrador:");
+            if(pass === "admin_estarlin") {
+                document.getElementById('admin-panel').style.display = 'block';
+                cargarPagosPendientes();
+            }
         }
 
-        // Cambio de color automático
-        setInterval(() => {
-            const neon = document.documentElement.style.getPropertyValue('--neon') === '#ff0055' ? '#00f2ff' : '#ff0055';
-            // document.documentElement.style.setProperty('--neon', neon); // Desactiva si prefieres color fijo
-        }, 5000);
+        function cargarPagosPendientes() {
+            db.collection("pagos_pendientes").onSnapshot((snapshot) => {
+                let html = "";
+                snapshot.forEach((doc) => {
+                    let data = doc.data();
+                    html += `
+                        <div class="pago-item">
+                            <b>Usuario:</b> ${data.usuario}<br>
+                            <b>Ref:</b> ${data.referencia}<br>
+                            <b>Fecha:</b> ${data.fecha}<br><br>
+                            <button class="btn-aprobar" onclick="aprobarPago('${doc.id}', '${data.usuario}', 10)">APROBAR $10.00</button>
+                        </div>
+                    `;
+                });
+                document.getElementById('lista-pendientes').innerHTML = html || "No hay pagos pendientes";
+            });
+        }
+
+        function aprobarPago(idDoc, usuario, monto) {
+            // 1. Sumar saldo al usuario
+            const userRef = db.collection("usuarios").doc(usuario);
+            db.runTransaction((transaction) => {
+                return transaction.get(userRef).then((userDoc) => {
+                    let nuevoSaldo = (userDoc.data().saldo || 0) + monto;
+                    transaction.update(userRef, { saldo: nuevoSaldo });
+                });
+            }).then(() => {
+                // 2. Borrar el reporte pendiente
+                db.collection("pagos_pendientes").doc(idDoc).delete();
+                alert("¡Pago aprobado y saldo enviado!");
+            });
+        }
     </script>
 </body>
 </html>
